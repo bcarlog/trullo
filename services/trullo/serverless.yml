@@ -1,0 +1,57 @@
+service:
+  name: trullo-service
+
+plugins:
+  - serverless-bundle
+  - serverless-pseudo-parameters
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  memorySize: 256
+  stage: ${opt:stage, 'dev'}
+  region: eu-west-1
+  environment:
+    BOARDS_TABLE_NAME: ${self:custom.BoardsTable.name}
+  iamRoleStatements:
+    - ${file(iam/BoardsTableIAM.yml):BoardsTableIAM}
+
+resources:
+  Resources:
+    BoardsTable: ${file(resources/BoardsTable.yml):BoardsTable}
+  
+functions:
+  createBoard:
+    handler: src/handlers/createBoard.handler
+    events:
+      - http:
+          method: POST
+          path: /board
+
+  getBoards:
+    handler: src/handlers/getBoards.handler
+    events:
+      - http:
+          method: GET
+          path: /boards
+
+  getBoard:
+    handler: src/handlers/getBoard.handler
+    events:
+      - http:
+          method: GET
+          path: /board/{id}
+
+  updateBoard:
+    handler: src/handlers/updateBoard.handler
+    events:
+      - http:
+          method: PATCH
+          path: /board/{id}
+
+custom:
+  BoardsTable:
+    name: !Ref BoardsTable
+    arn: !GetAtt BoardsTable.Arn
+  bundle:
+    linting: false
