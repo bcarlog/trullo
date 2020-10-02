@@ -1,0 +1,14 @@
+.addButton {
+    background-color: var(--color-addbuton-background);
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 12px;
+    font-size: 12px;
+    border-radius: 6px;
+    font-weight: 500;
+    color: var(--color-addbuton-text);
+    cursor: pointer;
+    
+    align-self: flex-start;
+    width: 240px;
+}

@@ -8,4 +8,4 @@ BoardsTableIAM:
     - dynamodb:Query
   Resource:
     - ${self:custom.BoardsTable.arn}
-    - !Join ['/', ['${self:custom.BoardsTable.arn}', 'index', 'statusIndex']]
+    - !Join ['/', ['${self:custom.BoardsTable.arn}', 'index', 'visibilityIndex']]

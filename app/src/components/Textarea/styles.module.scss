@@ -1,0 +1,31 @@
+.container {
+    display:inline-block; 
+    position:relative;
+    grid-area: description;
+    width: 100%;
+    align-self: stretch;
+    cursor: pointer;
+
+    .textarea {
+        padding: 4px 8px;
+        height: 200px;
+        width: 100%;
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 500;
+        border: none;
+        resize: none;
+    
+        &:disabled {
+            
+        }
+    }
+
+    .content {
+        position:absolute; 
+        left:0; 
+        right:0; 
+        top:0; 
+        bottom:0;
+    }
+}

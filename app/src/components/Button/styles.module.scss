@@ -1,0 +1,35 @@
+.button {
+    //display: inline-block;
+    background-color: var(--color-primary);
+    padding: 8px 16px;
+    color: var(--color-button-text);
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+        background-color: var(--color-primary-light);
+    }
+
+}
+
+.disabled {
+    background-color: var(--color-grey-light-1);
+    cursor: no-drop;
+    
+    &:hover {
+        background-color: var(--color-grey-light-1);
+    }
+}
+
+.small {
+    padding: 6px 16px;
+    font-size: 14px;
+    border-radius: 8px;
+}
+
+.square {
+    padding: 12px 12px;
+}

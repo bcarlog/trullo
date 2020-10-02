@@ -1,0 +1,58 @@
+.close {
+    position: absolute;
+    right: 0;
+}
+
+.modal {
+    position: relative;
+    display: grid;
+    width: 340px;
+    grid-template-areas:
+        "photo photo"
+        "input input"
+        "buttonCover buttonStatus"
+        "buttons buttons";
+    gap: 20px;
+    padding: 16px 16px 8px 16px;
+
+    .photo {
+        grid-area: photo;
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 12px;
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    .input {
+        grid-area: input;
+        width: 100%;
+        outline: none;
+        padding: 8px 16px;
+        border: 1px solid var(--color-grey-light-1);
+        border-radius: 12px;
+        font-family: inherit;
+        box-shadow: 2px 1px 4px rgba(0, 0, 0, 0.2);
+        margin-top: -10px;
+    }
+
+    .buttonCover {
+        grid-area: buttonCover;
+        position: relative;
+    }
+
+    .buttonStatus {
+        grid-area: buttonStatus;
+    }
+
+    .buttons {
+        grid-area: buttons;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        .cancel {
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+    }
+}

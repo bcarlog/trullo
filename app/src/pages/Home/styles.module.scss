@@ -1,0 +1,11 @@
+.container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.mainBase {
+    flex: 1;
+    background-color: var(--color-body-background);
+    padding: 20px;
+}

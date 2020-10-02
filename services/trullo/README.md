@@ -1,10 +1,14 @@
-# Trullo Service
+# Trello Clone Backend (Serverless)
+
+## Configuration
+Create a file called: env.yml and put your pixabay key
+```
+PIXABAY_API_KEY: MY_PIXABAY_API_KEY
+```
 
 ## Getting started
 ```
-sls create --name YOUR_PROJECT_NAME --template-url https://github.com/codingly-io/sls-base
-cd YOUR_PROJECT_NAME
 npm install
+serverless deploy
 ```
 
-You are ready to go!

@@ -12,46 +12,172 @@ provider:
   stage: ${opt:stage, 'dev'}
   region: eu-west-1
   environment:
+    PIXABAY_API_KEY: ${file(env.yml):PIXABAY_API_KEY}
     BOARDS_TABLE_NAME: ${self:custom.BoardsTable.name}
+    LISTS_TABLE_NAME: ${self:custom.ListsTable.name}
+    CARDS_TABLE_NAME: ${self:custom.CardsTable.name}
+    USERS_TABLE_NAME: ${self:custom.UsersTable.name}
   iamRoleStatements:
     - ${file(iam/BoardsTableIAM.yml):BoardsTableIAM}
+    - ${file(iam/ListsTableIAM.yml):ListsTableIAM}
+    - ${file(iam/CardsTableIAM.yml):CardsTableIAM}
+    - ${file(iam/UsersTableIAM.yml):UsersTableIAM}
 
 resources:
   Resources:
     BoardsTable: ${file(resources/BoardsTable.yml):BoardsTable}
+    ListsTable: ${file(resources/ListsTable.yml):ListsTable}
+    CardsTable: ${file(resources/CardsTable.yml):CardsTable}
+    UsersTable: ${file(resources/UsersTable.yml):UsersTable}
+    GatewayResponseDefault4XX:
+      Type: 'AWS::ApiGateway::GatewayResponse'
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+        ResponseType: DEFAULT_4XX
+        RestApiId:
+          Ref: 'ApiGatewayRestApi'
+    GatewayResponse:
+      Type: 'AWS::ApiGateway::GatewayResponse'
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+        ResponseType: EXPIRED_TOKEN
+        RestApiId:
+          Ref: 'ApiGatewayRestApi'
+        StatusCode: '401'
+    AuthFailureGatewayResponse:
+      Type: 'AWS::ApiGateway::GatewayResponse'
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+        ResponseType: UNAUTHORIZED
+        RestApiId:
+          Ref: 'ApiGatewayRestApi'
+        StatusCode: '401'
   
 functions:
   createBoard:
-    handler: src/handlers/createBoard.handler
+    handler: src/components/board/createBoard.handler
     events:
       - http:
           method: POST
           path: /board
+          cors: true
+          authorizer: ${self:custom.authorizer}
 
-  getBoards:
-    handler: src/handlers/getBoards.handler
+  getOwnBoards:
+    handler: src/components/board/getOwnBoards.handler
     events:
       - http:
           method: GET
-          path: /boards
+          path: /own-boards
+          cors: true
+          authorizer: ${self:custom.authorizer}
+
+  getPublicBoards:
+    handler: src/components/board/getPublicBoards.handler
+    events:
+      - http:
+          method: GET
+          path: /public-boards
+          cors: true
+          authorizer: ${self:custom.authorizer}
 
   getBoard:
-    handler: src/handlers/getBoard.handler
+    handler: src/components/board/getBoard.handler
     events:
       - http:
           method: GET
           path: /board/{id}
+          cors: true
+          authorizer: ${self:custom.authorizer}
 
   updateBoard:
-    handler: src/handlers/updateBoard.handler
+    handler: src/components/board/updateBoard.handler
     events:
       - http:
           method: PATCH
           path: /board/{id}
+          cors: true
+          authorizer: ${self:custom.authorizer}
+
+  createList:
+    handler: src/components/list/createList.handler
+    events:
+      - http:
+          method: POST
+          path: /list
+          cors: true
+          authorizer: ${self:custom.authorizer}
+
+  createCard:
+    handler: src/components/card/createCard.handler
+    events:
+      - http:
+          method: POST
+          path: /card
+          cors: true
+          authorizer: ${self:custom.authorizer}
+
+  changeListCard:
+    handler: src/components/card/changeListCard.handler
+    events:
+      - http:
+          method: PATCH
+          path: /card/{id}/list
+          cors: true
+          authorizer: ${self:custom.authorizer}
+
+  updateCard:
+    handler: src/components/card/updateCard.handler
+    events:
+      - http:
+          method: PATCH
+          path: /card/{id}
+          cors: true
+          authorizer: ${self:custom.authorizer}
+
+  createUser:
+    handler: src/components/user/createUser.handler
+    events:
+      - http:
+          method: POST
+          path: /user
+          cors: true
+
+  getUsers:
+    handler: src/components/user/getUsers.handler
+    events:
+      - http:
+          method: GET
+          path: /user
+          cors: true
+
+  getImages:
+    handler: src/components/image/getImages.handler
+    events:
+      - http:
+          method: GET
+          path: /image
+          cors: true
 
 custom:
+  authorizer: arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:auth-${self:provider.stage}-auth
   BoardsTable:
     name: !Ref BoardsTable
     arn: !GetAtt BoardsTable.Arn
+  ListsTable:
+    name: !Ref ListsTable
+    arn: !GetAtt ListsTable.Arn
+  CardsTable:
+    name: !Ref CardsTable
+    arn: !GetAtt CardsTable.Arn
+  UsersTable:
+    name: !Ref UsersTable
+    arn: !GetAtt UsersTable.Arn
   bundle:
     linting: false

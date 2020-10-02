@@ -1,0 +1,11 @@
+CardsTableIAM:
+  Effect: Allow
+  Action:
+    - dynamodb:PutItem
+    - dynamodb:Scan
+    - dynamodb:GetItem
+    - dynamodb:UpdateItem
+    - dynamodb:Query
+  Resource:
+    - ${self:custom.CardsTable.arn}
+    - !Join ['/', ['${self:custom.CardsTable.arn}', 'index', 'listIdIndex']]

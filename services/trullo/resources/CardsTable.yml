@@ -1,0 +1,21 @@
+CardsTable:
+  Type: AWS::DynamoDB::Table
+  Properties:
+    TableName: CardsTable-${self:provider.stage}
+    BillingMode: PAY_PER_REQUEST
+    AttributeDefinitions:
+      - AttributeName: id
+        AttributeType: S
+      - AttributeName: listId
+        AttributeType: S
+    KeySchema:
+      - AttributeName: id
+        KeyType: HASH
+
+    GlobalSecondaryIndexes:
+      - IndexName: listIdIndex
+        KeySchema:
+          - AttributeName: listId
+            KeyType: HASH
+        Projection:
+          ProjectionType: ALL

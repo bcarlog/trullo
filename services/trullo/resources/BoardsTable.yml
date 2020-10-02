@@ -6,16 +6,16 @@ BoardsTable:
     AttributeDefinitions:
       - AttributeName: id
         AttributeType: S
-      - AttributeName: status
+      - AttributeName: visibility
         AttributeType: S
     KeySchema:
       - AttributeName: id
         KeyType: HASH
 
     GlobalSecondaryIndexes:
-      - IndexName: statusIndex
+      - IndexName: visibilityIndex
         KeySchema:
-          - AttributeName: status
+          - AttributeName: visibility
             KeyType: HASH
         Projection:
           ProjectionType: ALL

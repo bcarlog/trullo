@@ -1,0 +1,22 @@
+@import "../Card/styles.module.scss";
+
+.input {
+    border: none;
+    padding: 6px 2px;
+    outline: none;
+    color: inherit;
+    font-family: inherit;
+    width: 100%;
+    padding-bottom: 20px;
+    font-size: 16px;
+    resize: none;
+}
+
+.button {
+    background-color: var(--color-newbuton-background);
+    color: var(--color-newbuton-text);
+    display: inline-block;
+    font-size: 12px;
+    padding: 4px 14px;
+    border-radius: 8px;
+}

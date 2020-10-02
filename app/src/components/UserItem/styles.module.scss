@@ -1,0 +1,16 @@
+.userItem{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-right: 12px;
+    height: 38px;
+    width: 38px;
+    position: relative;
+
+    .userPhoto {
+        object-fit: cover;
+        width: 100%;
+        border-radius: 12px;
+    }
+}

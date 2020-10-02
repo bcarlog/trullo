@@ -1,0 +1,77 @@
+.comments {
+    display: flex;    
+    flex-direction: column;
+
+    .comment {
+        display: flex;    
+        flex-direction: row;
+        border: 1px solid var(--color-grey-light-4);
+        border-radius: 12px;
+        padding: 8px;
+
+        .photoContainer {
+            margin-right: 8px;
+            .photo {
+                width: 30px;
+                height: 30px;
+                border-radius: 8px;
+                object-fit: cover;
+            }
+        }
+
+        .writeContainer {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+    }
+}
+
+.userComment {
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+
+    .userHead {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        .userDetail {
+            display: flex;
+            flex-direction: row;
+
+            .userPhotoContainer{
+                .userPhoto {
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 8px;
+                    object-fit: cover;
+                }
+            }
+
+            .userDataContainer {
+                display: flex;
+                flex-direction: column;
+                margin: 0 8px;
+                .userName {
+                    font-size: 14px;
+                    font-weight: 600;
+                }
+                .userDate {
+                    font-size: 12px;
+                    font-weight: 600;
+                    color: var(--color-grey-light-5);
+                }
+            }
+
+        }
+
+    }
+
+    .text {
+        font-weight: 500;
+        margin: 8px 0;
+    }
+}

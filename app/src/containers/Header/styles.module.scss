@@ -1,0 +1,141 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px 20px 8px 20px;
+    background-color: var(--color-header-background);
+    box-shadow: 0 10px 10px rgba(0,0,0,.25);
+    border-radius: 20px 20px 0 0;
+    user-select: none;
+
+    .logoBox {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .logo {
+            width: 32px;
+            height: 29px;
+        }
+        .title {
+            font-weight: 600;
+            font-size: 18px;
+            padding: 0 20px;
+        }
+    }
+
+    .messageBox{
+        display: flex;
+        flex: 1;
+        justify-content: flex-start;
+        align-items: center;
+
+        .name{
+            font-size: 17px;
+            font-weight: 600;
+            padding: 0 16px;
+            border-right: 3px solid var(--color-grey-light-1);
+        }
+
+        .boardsButton{
+            margin: 0 16px;
+            width: 110px;
+            background-color: var(--color-grey-light-1);
+            border-radius: 5px;
+            color: var(--color-grey-dark-1);
+            padding: 4px 10px;
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            cursor: pointer;
+        }
+    }
+
+    .searchBox {
+        flex: 0 0 36%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+
+        .search {
+            font-family: inherit;
+            font-size: 14px;
+            color: var(--color-gray-dark-2);
+            width: 90%;
+            padding: 14px 20px;
+            outline: none;
+            border-radius: 18px;
+            border: none;
+            box-shadow: 1px 3px 5px rgba(0,0,0,.25);
+            transition: width .2s ease;
+
+            &:focus {
+                width: 100%;
+            }
+
+            &:focus + .button {
+                right: 1%;
+            }
+        }
+
+        .button {
+            position: absolute;
+            right: 6%;
+            background-color: var(--color-primary);
+            padding: 8px 16px;
+            color: var(--color-button-text);
+            border-radius: 15px;
+            transition: all .2s ease;
+            cursor: pointer;
+
+            &:hover {
+                background-color: var(--color-primary-light);
+            }
+        }
+    }
+
+    .profileContainer {
+        position: relative;
+    }
+
+    .profileBox {
+        display: flex;
+        align-items: center;
+        border: 1px solid transparent;
+        transition: all .1 ease;
+        border-radius: 10px;
+        padding: 8px;
+        
+        &:hover {
+            cursor: pointer;
+            border: 1px solid var(--color-grey-light-1);
+        }
+
+        .photo {
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
+        }
+
+        .name {
+            font-size: 16px;
+            font-weight: 400;
+            padding: 0 20px;
+        }
+
+        .button {
+
+        }
+    }
+
+    .profileOptions {
+        position: absolute;
+        right: 0;
+        top: 100%;
+        z-index: 12;
+        background-color: var(--color-header-background);
+        box-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        padding: 18px 24px;
+        border-radius: 12px;
+        width: 220px;
+    }
+}
