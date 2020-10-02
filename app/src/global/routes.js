@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux'
 import GuardedRoute from '../hoc/AuthorizationGuard'
 import Home from '../pages/Home/Home'
 import Board from '../pages/Board/Board'
+import NotFound from '../pages/NotFound/NotFound'
 import { changeUserAuth, changeUserData } from '../store/actions/user'
 
 const Routes = (props) => {
@@ -36,7 +37,7 @@ const Routes = (props) => {
         <Switch>
             <Route path="/" exact component={Home} />
             <GuardedRoute path="/board/:id" exact component={Board} auth={true} />
-            <Route render={() => <h1>Not found!</h1>} />
+            <Route render={() => <NotFound/>} />
         </Switch>
     )
 }

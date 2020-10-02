@@ -15,7 +15,7 @@ async function getUsers(event, context) {
     if(username) {
         users = users.filter(user => user.username.toUpperCase().indexOf(username.toUpperCase()) !== -1)
     }else {
-        users = users.slice(0,3)
+        users = users.slice(0,30)
     }
 
     users = users.map(user => ({

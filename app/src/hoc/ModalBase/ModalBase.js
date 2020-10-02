@@ -2,7 +2,9 @@ import React from 'react'
 import styles from './styles.module.scss'
 
 const BackModal = props => (
-    props.show ? <div className={styles.backModal} onClick={props.onClick}></div> : null
+    props.show ? <div className={styles.backModal} onClick={props.onClick}>
+        {props.children}
+    </div> : null
 )
 
 const ModalBase = props => {
@@ -18,10 +20,14 @@ const ModalBase = props => {
 
     return (
         <>
-            <BackModal show={props.show} onClick={props.onClose}/>
+            <BackModal show={props.show} onClick={props.onClose}>
             <div className={classes.join(' ')} style={{...props.style}}>
-                <div className={styles.modal}>{props.children}</div>
+                <div className={styles.modal}>
+                    {props.children}
+                </div>
             </div>
+
+            </BackModal>
         </>
     )
 }

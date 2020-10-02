@@ -65,11 +65,16 @@
 
         span {
             font-weight: 600;
+            white-space: nowrap;
+            overflow-x: hidden;
+            text-overflow: ellipsis;
+            flex: 1;
         }
     }
 
     .selected {
-        border: 1px solid var(--color-grey-light-1);
+        border: 1px solid var(--color-grey-light-2);
+        background-color: var(--color-grey-light-1);
     }
 }
 
