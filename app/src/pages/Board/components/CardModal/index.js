@@ -9,7 +9,7 @@ import Textarea from '../../../../components/Textarea/Textarea'
 import LabelsPop from './components/LabelsPop'
 import CoverPop from '../../../../components/CoverPop/CoverPop'
 
-const CardModal = ({ cardId, titleP, coverSmallP, coverMediumP, descriptionP, labelsP, show, onClose, onChangeTitleP, onChangeCoverSmallP, onChangeLabelsP }) => {
+const CardModal = ({ cardId, titleP, coverSmallP, coverMediumP, descriptionP, labelsP, show, onClose, onChangeTitleP, onChangeCoverSmallP, onChangeLabelsP, editable }) => {
     const [popToShow, setPopToShow] = useState(null)
     const [editTextArea, setEditTextArea] = useState(false)
     const [cover, setCover] = useState({ small: coverSmallP, medium: coverMediumP })
@@ -17,7 +17,8 @@ const CardModal = ({ cardId, titleP, coverSmallP, coverMediumP, descriptionP, la
     const [description, setDescription] = useState(descriptionP)
     const [labels, setLabels] = useState(labelsP)
 
-    const onSaveCard = ({ _labels = labels, _cover = cover }={}) => {
+    const onSaveCard = ({ _labels = labels, _cover = cover } = {}) => {
+        if (!editable) return
         updateCard({ cardId, title, description, coverSmall: _cover.small, coverMedium: _cover.medium, labels: _labels })
         onChangeTitleP(title)
         onChangeCoverSmallP(_cover.small)
@@ -58,20 +59,23 @@ const CardModal = ({ cardId, titleP, coverSmallP, coverMediumP, descriptionP, la
                             className={styles.title}
                             onBlur={onSaveCard}
                             onKeyDown={onPressEnter}
+                            disabled={!editable}
                         />
                         <div className={styles.subTitle}>in list <span>In progress</span></div>
                         <div className={styles.detail}>
                             <h4><i className="material-icons md-16">description</i> Description</h4>
-                            <div className={styles.buttonContainer} onClick={()=>setEditTextArea(true)}>
-                                <div className={styles.button}><i className="material-icons md-16">create</i>  Edit</div>
-                            </div>
-                            <Textarea value={description} onChange={setDescription} onSave={onSaveCard} isEditable={editTextArea}/>
+                            {editable ?
+                                <div className={styles.buttonContainer} onClick={() => setEditTextArea(true)}>
+                                    <div className={styles.button}><i className="material-icons md-16">create</i>  Edit</div>
+                                </div> : null
+                            }
+                            <Textarea value={description} onChange={setDescription} onSave={onSaveCard} isEditable={editTextArea} editable={editable}/>
                         </div>
                     </div>
                     <div className={styles.actions}>
                         <h4><i className="material-icons md-16">account_circle</i> Actions</h4>
                         <div style={{ position: 'relative' }}>
-                            <ButtonSecondary text="Labers" icon="label" onClick={() => setPopToShow('labels')} />
+                            <ButtonSecondary text="Labers" icon="label" onClick={() => setPopToShow('labels')} disabled={!editable}/>
                             <LabelsPop
                                 show={popToShow === 'labels'}
                                 onClose={() => setPopToShow(null)}
@@ -80,7 +84,7 @@ const CardModal = ({ cardId, titleP, coverSmallP, coverMediumP, descriptionP, la
                             />
                         </div>
                         <div style={{ position: 'relative' }}>
-                            <ButtonSecondary text="Cover" icon="photo" onClick={() => setPopToShow('cover')} />
+                            <ButtonSecondary text="Cover" icon="photo" onClick={() => setPopToShow('cover')} disabled={!editable}/>
                             <CoverPop
                                 show={popToShow === 'cover'}
                                 onClose={() => setPopToShow(null)}

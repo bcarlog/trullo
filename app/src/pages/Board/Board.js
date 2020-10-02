@@ -12,6 +12,7 @@ import { getBoardById, updateBoard } from '../../services/BoardServices'
 const Board = props => {
     const id = props.match.params.id
     const [amIOwner, setAmIOwner] = useState(false)
+    const [editable, setEditable] = useState(false)
     const [title, setTitle] = useState("")
     const [visibility, setVisibility] = useState("")
     const [team, setTeam] = useState([])
@@ -34,6 +35,7 @@ const Board = props => {
         setTeamFull(board.teamFull)
         setOwnerFull(board.ownerFull)
         setAmIOwner(board.amIOwner)
+        setEditable(board.amIEdit)
         setLists(board.lists.sort((l1,l2) => l1.order - l2.order))
         setIsLoadinglists(false)
     }
@@ -65,6 +67,7 @@ const Board = props => {
                 visibility={visibility} 
                 owner={ownerFull}
                 amIOwner={amIOwner}
+                editable={editable}
                 boardId={id}/>
             <Provider context={LocalContext} store={store}>
                 <Lists 
@@ -72,7 +75,8 @@ const Board = props => {
                     onChangeList={setLists}
                     isLoading={isLoadingLists} 
                     context={LocalContext} 
-                    boardId={id}/>
+                    boardId={id}
+                    editable={editable}/>
             </Provider>
         </main>
     )

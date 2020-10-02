@@ -6,7 +6,7 @@ import UserItem from '../../../../components/UserItem/UserItem'
 import AddUserItem from '../../../../components/AddUserItem/AddUserItem'
 import { getUsers } from '../../../../services/UserServices'
 
-const Menu = ({ visibility, team, owner, boardId, amIOwner, onUpdateBoard }) => {
+const Menu = ({ visibility, team, owner, boardId, amIOwner, onUpdateBoard, editable }) => {
     const [newUsers, setNewUsers] = useState([])
     const [isLoadingUsers, setIsLoadingUsers] = useState(false)
 
@@ -25,7 +25,7 @@ const Menu = ({ visibility, team, owner, boardId, amIOwner, onUpdateBoard }) => 
     return (
         <div className={styles.menu}>
             <div className={styles.left}>
-                <Visibility value={visibility} onChange={(visibility) => onUpdateBoard({ visibility })} />
+                <Visibility value={visibility} onChange={(visibility) => onUpdateBoard({ visibility })} editable={editable}/>
                 <div className={styles.members}>
                     {owner ?
                         <UserItem key={"key-Admin-" + owner.username} photo={owner.photo} />

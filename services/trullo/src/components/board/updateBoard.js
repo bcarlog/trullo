@@ -2,12 +2,15 @@ import commonMiddleware from '../../lib/commonMiddleware'
 import createError from 'http-errors'
 
 import * as BoardServices from './BoardServices'
+import * as UserServices from '../user/UserServices'
 import { toBoardRes } from './utils/boardRes'
 
 async function updateBoard(event, context) {
     const { id } = event.pathParameters
     const { title, description, visibility, team } = event.body
     const { email } = event.requestContext.authorizer
+
+    const user = await UserServices.getUserByEmail(email)
 
     const board = await BoardServices.getBoardById(id)
 
@@ -23,6 +26,9 @@ async function updateBoard(event, context) {
         throw new createError.Forbidden('Needs a title or description or visibility or team')
     }
 
+    const amIEdit = board.owner === email || board.team.includes(user.id)
+    const amIOwner = board.owner === email
+
     // ESTO SE PUEDE MEJORAR
     var attributes = {
         title: { Action: 'PUT', Value: title },
@@ -33,6 +39,8 @@ async function updateBoard(event, context) {
 
     const updatedBoard = await BoardServices.updateBoard(id, attributes)
     const boardRes = await toBoardRes(updatedBoard)
+    boardRes.amIOwner = amIOwner
+    boardRes.amIEdit = amIEdit
 
     return {
         statusCode: 200,

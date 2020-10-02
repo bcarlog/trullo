@@ -11,6 +11,8 @@ import Card from '../Card/Card'
 import CardNew from '../CardNew/CardNew'
 
 const List = props => {
+    const editable = props.editable
+
     const useDispatch = createDispatchHook(props.context)
     const useSelector = createSelectorHook(props.context)
     const { cardDrag, height } = useSelector(state => state);
@@ -96,6 +98,7 @@ const List = props => {
             labels={card.labels}
             hide={cardDrag && cardDrag.id === card.id}
             order={card.order}
+            editable={editable}
             onChangeCardTmp={setTmpCardPos}
             onDrag={({ height }) => onDragCard({ id: card.id, height })}
             onDragEnd={onDragEnd}
@@ -114,6 +117,7 @@ const List = props => {
                 labels={cardDrag.labels}
                 hide={true}
                 order={cardDrag.order}
+                editable={editable}
                 onChangeCardTmp={setTmpCardPos}
                 onDrag={({ height }) => onDragCard({ id: cardDrag.id, height })}
                 onDragEnd={onDragEnd}
@@ -132,6 +136,13 @@ const List = props => {
         )
     }
 
+    let addCardComponent = null
+    if(isAddingCard){
+        addCardComponent = <CardNew onBlur={saveCardHandler} onSave={saveCardHandler} />
+    }else if(editable){
+        addCardComponent = <AddButton title="Add another card" onClick={() => setIsAddingCard(true)} />
+    }
+
     return (
         <div className={styles.list} onDragEnter={onDragEnter} onDragLeave={onDragLeave} onDrop={onDropCard} ref={listRef} onDragOver={e => e.preventDefault()}>
             <div className={styles.head}>
@@ -140,11 +151,7 @@ const List = props => {
             </div>
             <div className={styles.cardsContainer}>
                 {cardComponents}
-                {isAddingCard ?
-                    <CardNew onBlur={saveCardHandler} onSave={saveCardHandler} />
-                    :
-                    <AddButton title="Add another card" onClick={() => setIsAddingCard(true)} />
-                }
+                {addCardComponent}
 
             </div>
         </div>

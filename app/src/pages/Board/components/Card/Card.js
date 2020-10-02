@@ -4,7 +4,7 @@ import styles from './styles.module.scss'
 
 import CardModal from '../CardModal'
 
-const Card = ({ id, title, coverSmall, coverMedium, description, labels = [], hide, onDrag, order, onDragEnd, onChangeCardTmp }) => {
+const Card = ({ id, title, coverSmall, coverMedium, description, labels = [], hide, onDrag, order, onDragEnd, onChangeCardTmp, editable }) => {
     const [showModal, setShowModal] = useState(false)
     const [_title, _setTitle] = useState(title)
     const [_coverSmall, _setCoverSmall] = useState(coverSmall)
@@ -34,7 +34,7 @@ const Card = ({ id, title, coverSmall, coverMedium, description, labels = [], hi
                 <div
                     ref={ref}
                     className={styles.card}
-                    draggable
+                    draggable={editable}
                     onDrag={() => onDrag({ height: ref ? ref.current.clientHeight : 49 })}>
                     <div>
                         {_coverSmall ? <img src={_coverSmall} className={styles.cover} alt={_title}/> : null}
@@ -65,6 +65,7 @@ const Card = ({ id, title, coverSmall, coverMedium, description, labels = [], hi
                 coverMediumP={coverMedium} 
                 descriptionP={description} 
                 labelsP={labels}
+                editable={editable}
                 
                 onChangeTitleP={_setTitle}
                 onChangeCoverSmallP={_setCoverSmall}

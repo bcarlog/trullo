@@ -6,7 +6,7 @@ import List from '../List/List'
 import AddButton from '../../../../components/AddButton/AddButton'
 import ListNew from '../CardNew/CardNew'
 
-const Lists = ({ boardId, lists, isLoading, onChangeList, context }) => {
+const Lists = ({ boardId, lists, isLoading, onChangeList, context, editable }) => {
     const [isAddingList, setIsAddingList] = useState(false)
     const [_lists, _setLists] = useState(lists)
 
@@ -32,16 +32,16 @@ const Lists = ({ boardId, lists, isLoading, onChangeList, context }) => {
         <div className={styles.container}>
             <div className={styles.lists}>
                 {_lists.map(list => (
-                    <List key={`list-${list.id}`} context={context} {...list} />
+                    <List key={`list-${list.id}`} context={context} {...list} editable={editable}/>
                 ))}
                 {isLoading ?
                     <>
                         <List isLoading />
                         <List isLoading />
                     </>
-                    : !isAddingList ? <AddButton title="Add another list" onClick={() => setIsAddingList(true)} /> : null
+                    : !isAddingList && editable ? <AddButton title="Add another list" onClick={() => setIsAddingList(true)} /> : null
                 }
-                {isAddingList ?
+                {isAddingList && editable ?
                     <ListNew onBlur={saveListHandler} onSave={saveListHandler} placeholder="Enter a title for this list..." />
                     :
                     null

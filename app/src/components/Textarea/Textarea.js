@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styles from './styles.module.scss'
 
-const Textarea = ({ value , height, isEditable, onChange, onSave, placeholder = "", }) => {
+const Textarea = ({ value , height, isEditable, onChange, onSave, placeholder = "", editable}) => {
     const [edit, setEdit] = useState(isEditable ?? false)
     const ref = useRef(null)
 
@@ -34,7 +34,7 @@ const Textarea = ({ value , height, isEditable, onChange, onSave, placeholder = 
         <div className={styles.container}>
             <textarea 
                 ref={ref}
-                disabled={!edit}
+                disabled={!edit && !editable}
                 value={value ?? ""}
                 className={styles.textarea}
                 placeholder={placeholder}
@@ -44,7 +44,7 @@ const Textarea = ({ value , height, isEditable, onChange, onSave, placeholder = 
                 onKeyDown={onPressEnter}
             />
             {!edit ?
-                <div className={styles.content} onClick={() => setEdit(true)}></div>
+                <div className={styles.content} onClick={() => editable && setEdit(true)}></div>
                 : null
             }
         </div>

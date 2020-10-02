@@ -37,7 +37,7 @@ export const getBoardById = async(id) => {
     return board
 }
 
-export const getPublicBoards = async({except=null}) =>{ //Email a no considerar
+export const getPublicBoards = async({exceptEmail=null, exceptId}) =>{ //Email a no considerar
     try {
         const params = {
             TableName: process.env.BOARDS_TABLE_NAME,
@@ -48,7 +48,7 @@ export const getPublicBoards = async({except=null}) =>{ //Email a no considerar
             }
         }
         const result = await dynamodb.query(params).promise()
-        return result.Items.filter(item => item.status === 'ACTIVE' && item.owner !== except)
+        return result.Items.filter(item => item.status === 'ACTIVE' && item.owner !== exceptEmail && !item.team.includes(exceptId))
     } catch(error){
         console.log(error)
         throw new createError.InternalServerError(error)

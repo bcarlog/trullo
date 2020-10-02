@@ -23,11 +23,11 @@ const Visibility = props => {
 
     useOutsideDetect(visibilityRef, setShow.bind(this, false))
 
-    let buttonVisibility = <ButtonSecondary icon="hourglass_bottom" text="..." onClick={() => {}} />
+    let buttonVisibility = <ButtonSecondary icon="hourglass_bottom" text="..." onClick={() => {}} disabled={!props.editable}/>
     if(state === 'PRIVATE') {
-        buttonVisibility = <ButtonSecondary icon="lock" text="Private" onClick={() => setShow(state => !state)} />
+        buttonVisibility = <ButtonSecondary icon="lock" text="Private" onClick={() => setShow(state => !state)} disabled={!props.editable}/>
     }else if(state === 'PUBLIC'){
-        buttonVisibility = <ButtonSecondary icon="public" text="Public" onClick={() => setShow(state => !state)} />
+        buttonVisibility = <ButtonSecondary icon="public" text="Public" onClick={() => setShow(state => !state)} disabled={!props.editable}/>
     }
 
     useEffect(()=>{

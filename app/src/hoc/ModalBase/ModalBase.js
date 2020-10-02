@@ -13,7 +13,7 @@ const ModalBase = props => {
 
     if (props.show === false) {
         classes.push(styles.hide)
-        if(props.hide){
+        if (props.hide) {
             return <></>
         }
     }
@@ -21,13 +21,12 @@ const ModalBase = props => {
     return (
         <>
             <BackModal show={props.show} onClick={props.onClose}>
-            <div className={classes.join(' ')} style={{...props.style}}>
-                <div className={styles.modal}>
-                    {props.children}
-                </div>
-            </div>
-
             </BackModal>
+                <div className={classes.join(' ')} style={{ ...props.style }}>
+                    <div className={styles.modal}>
+                        {props.children}
+                    </div>
+                </div>
         </>
     )
 }

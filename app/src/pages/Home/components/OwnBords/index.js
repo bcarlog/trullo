@@ -12,7 +12,7 @@ const Main = props => {
     return (
         <div className={styles.main}>
             <div className={styles.head}>
-                <h3>Own Boards</h3>
+                <h3>My Boards</h3>
                 <Button onClick={()=>setShowModal(state => !state)} text="+ Add"/>
             </div>
             <div className={styles.boardList}>
