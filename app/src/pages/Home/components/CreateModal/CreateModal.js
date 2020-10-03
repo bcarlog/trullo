@@ -15,9 +15,11 @@ const CreateModal = props => {
     const [cover, setCover] = useState()
     const [visibility, setVisibility] = useState('PRIVATE')
     const [showCoverPop, setShowCoverPop] = useState(false)
+    const [loading, setLoading] = useState(false)
     const history = useHistory()
 
     const onCreateBoard = () => {
+        setLoading(true)
         const board = {
             title,
             cover: cover,
@@ -25,6 +27,7 @@ const CreateModal = props => {
         }
         createBoard(board)
             .then(res => history.push(`/board/${res.id}`))
+            .finally(()=>setLoading(false))
     }
 
     return (
@@ -51,7 +54,7 @@ const CreateModal = props => {
                 </div>
                 <div className={styles.buttons}>
                     <div className={styles.cancel} onClick={props.onClose}>Cancel</div>
-                    <Button text="+ Create" onClick={onCreateBoard} />
+                    <Button text="+ Create" onClick={onCreateBoard} loading={loading}/>
                 </div>
             </div>
         </ModalBase>

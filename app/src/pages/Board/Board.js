@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore } from 'redux'
 import styles from './styles.module.scss'
 
 import itemReducer from './store/screenReducer'
 import Header from '../../containers/Header/Header'
 import Menu from './components/Menu/Menu';
 import Lists from './components/Lists/Lists';
+import Info from './components/Info/Info'
 import { getBoardById, updateBoard } from '../../services/BoardServices'
 
 const Board = props => {
@@ -20,11 +21,15 @@ const Board = props => {
     const [ownerFull, setOwnerFull] = useState()
     const [lists, setLists] = useState([])
     const [isLoadingLists, setIsLoadinglists] = useState(true)
+    const [showInfo, setShowInfo] = useState(false)
 
     useEffect(() => {
         getBoardById(id)
             .then(data => {
                 updateInternBoard(data)
+            })
+            .catch((err) => {
+                window.open("/", "_self")
             })
     }, [id])
 
@@ -36,13 +41,14 @@ const Board = props => {
         setOwnerFull(board.ownerFull)
         setAmIOwner(board.amIOwner)
         setEditable(board.amIEdit)
-        setLists(board.lists.sort((l1,l2) => l1.order - l2.order))
+        setLists(board.lists.sort((l1, l2) => l1.order - l2.order))
         setIsLoadinglists(false)
+        setShowInfo(!board.amIEdit)
     }
 
     const updateBoardHandler = (data) => {
         if (!isLoadingLists) {
-            if(data.newUserId){
+            if (data.newUserId) {
                 data.team = [...team, data.newUserId]
                 delete data.newUserId
             }
@@ -61,22 +67,24 @@ const Board = props => {
     return (
         <main className={styles.board}>
             <Header title={title} />
-            <Menu 
-                onUpdateBoard={updateBoardHandler} 
-                team={teamFull} 
-                visibility={visibility} 
+            {showInfo & !isLoadingLists? <Info text="This board is public, so that you can't edit this :(" onClose={()=>setShowInfo(false)}/> : null}
+
+            <Menu
+                onUpdateBoard={updateBoardHandler}
+                team={teamFull}
+                visibility={visibility}
                 owner={ownerFull}
                 amIOwner={amIOwner}
                 editable={editable}
-                boardId={id}/>
+                boardId={id} />
             <Provider context={LocalContext} store={store}>
-                <Lists 
+                <Lists
                     lists={lists}
                     onChangeList={setLists}
-                    isLoading={isLoadingLists} 
-                    context={LocalContext} 
+                    isLoading={isLoadingLists}
+                    context={LocalContext}
                     boardId={id}
-                    editable={editable}/>
+                    editable={editable} />
             </Provider>
         </main>
     )

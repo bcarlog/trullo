@@ -4,7 +4,7 @@ import styles from './styles.module.scss'
 const Button = props => {
 
     const ownStyles = [styles.button, ]
-    if(props.disabled){
+    if(props.disabled || props.loading){
         ownStyles.push(styles.disabled)
     }
 
@@ -15,7 +15,7 @@ const Button = props => {
     }
 
     const onClick = () => {
-        if(props.disabled){
+        if(props.disabled || props.loading){
             return
         }
         props.onClick()
@@ -27,7 +27,7 @@ const Button = props => {
             className={ownStyles.join(' ')}
         >
             {props.icon ? <i className="material-icons md-16">{props.icon}</i> : null}
-            {props.text}
+            {props.loading ? 'Creating' : props.text}
         </div>
     )
 }
