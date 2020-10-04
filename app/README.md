@@ -1,7 +1,5 @@
 # Trello Clone front-end
 
-# I am still working on this project
-
 ## Configuration
 
 In Auth0 allow the domain where the web will be deployed
