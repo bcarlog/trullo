@@ -1,168 +1,84 @@
-import React, { useEffect, useRef, useState } from 'react'
-import Skeleton from 'react-loading-skeleton'
-import { createDispatchHook, createSelectorHook } from 'react-redux'
+import React, { useState } from 'react'
+import { connect } from 'react-redux'
+import { Droppable, Draggable } from 'react-beautiful-dnd'
 import styles from './styles.module.scss'
 
-import { createCard, updateCardList } from '../../../../services/CardServices'
-import { dragCard, dropCard } from '../../store/screenActions'
-import { orderListWithNewCard, orderListFromOrder } from '../../utils/list'
+import { getCardsFromList } from '../../../../store/selectors'
+import { addCardServer } from '../../../../store/actions/board'
 import AddButton from '../../../../components/AddButton/AddButton'
 import Card from '../Card/Card'
 import CardNew from '../CardNew/CardNew'
+import CardSaving from '../Card/CardSaving'
 
-const List = props => {
-    const editable = props.editable
-
-    const useDispatch = createDispatchHook(props.context)
-    const useSelector = createSelectorHook(props.context)
-    const { cardDrag, height } = useSelector(state => state);
-    const dispatch = useDispatch()
-
-    const [tmpCardPos, setTmpCardPos] = useState(-1)
-    const [cards, setCards] = useState(props.cards)
+const List = ({ id, index, title, boardId, editable, cards, isDragDisabled, addCardServer }) => {
     const [isAddingCard, setIsAddingCard] = useState(false)
-    const listRef = useRef(null)
-
-    useEffect(() => {
-        setCards(props.cards)
-    }, [props.cards])
+    const [newCardTitle, setNewCardTitle] = useState(null)
 
     const saveCardHandler = (text) => {
         if (text) {
-            const card = {
-                title: text,
-                description: null,
-                boardId: props.boardId,
-                listId: props.id
-            }
-            createCard(card)
-                .then(data => {
-                    setCards([...cards, data])
-                })
+            setNewCardTitle(text)
+            addCardServer({ title: text, boardId, listId: id, cb: ()=>setNewCardTitle(null) })
         }
         setIsAddingCard(false)
     }
 
-    const onDragEnter = (e) => {// Se ejecuta en list destino
-        e.preventDefault()
-        if (cardDrag && tmpCardPos === -1) {
-            setTmpCardPos(1)
-        }
-    }
-
-    const onDragLeave = (e) => {// Se ejecuta en list temporal
-        if (!listRef.current.contains(e.relatedTarget)) {
-            setTmpCardPos(-1)
-        }
-    }
-
-    const onDropCard = () => {// Se ejecuta en list destino
-        if (cardDrag) {
-            let newPosCard = tmpCardPos === -1 ? 1 : tmpCardPos
-            const newCards = [...cards, { ...cardDrag, order: newPosCard, listId: props.id }]
-            let newCardsOrdered = orderListWithNewCard({ list: newCards, id: cardDrag.id, order: newPosCard })
-            setCards(newCardsOrdered)
-
-            updateCardList({ cardId: cardDrag.id, listId: props.id, order: newPosCard })
-            dispatch(dropCard())
-        }
-        setTmpCardPos(-1)
-    }
-
-    const onDragCard = ({ id, height }) => { // Se ejecuta en list original
-        if (!cardDrag) {
-            const cardDragTmp = { ...cards.find(card => card.id === id) }
-            dispatch(dragCard({ cardDrag: cardDragTmp, height }))
-            setCards(cards => orderListFromOrder({ list: cards.filter(c => c.id !== cardDragTmp.id), order: cardDragTmp.order }))
-        }
-    }
-
-    const onDragEnd = () => { // Se ejecuta en list original
-        if (cardDrag) { // Si no puso el card en ninguna lista
-            const newCards = [...cards, cardDrag]
-            setCards(orderListWithNewCard({ list: newCards, id: cardDrag.id, order: cardDrag.order }))
-            dispatch(dropCard())
-        }
+    let addCardComponent = null
+    if (isAddingCard) {
+        addCardComponent = <CardNew onBlur={saveCardHandler} onSave={saveCardHandler} />
+    } else if (editable) {
+        addCardComponent = <AddButton title="Add another card" onClick={() => setIsAddingCard(true)} />
     }
 
     const cardsOrdered = cards.sort((c1, c2) => c1.order - c2.order)
 
-    let cardComponents = cardsOrdered.map(card => (
-        <Card
-            key={card.id}
-            id={card.id}
-            title={card.title}
-            coverSmall={card.coverSmall}
-            coverMedium={card.coverMedium}
-            description={card.description}
-            labels={card.labels}
-            hide={cardDrag && cardDrag.id === card.id}
-            order={card.order}
-            editable={editable}
-            onChangeCardTmp={setTmpCardPos}
-            onDrag={({ height }) => onDragCard({ id: card.id, height })}
-            onDragEnd={onDragEnd}
-        />
-    ))
-
-    if (cardDrag && cardDrag.listId === props.id) {
-        cardComponents.push(
-            <Card
-                key={cardDrag.id}
-                id={cardDrag.id}
-                title={cardDrag.title}
-                coverSmall={cardDrag.coverSmall}
-                coverMedium={cardDrag.coverMedium}
-                description={cardDrag.description}
-                labels={cardDrag.labels}
-                hide={true}
-                order={cardDrag.order}
-                editable={editable}
-                onChangeCardTmp={setTmpCardPos}
-                onDrag={({ height }) => onDragCard({ id: cardDrag.id, height })}
-                onDragEnd={onDragEnd}
-            />
-        )
-    }
-
-    if (tmpCardPos > 0) {
-        let pos = tmpCardPos - 1
-        cardComponents.splice(pos, 0,
-            <div
-                key={'tmp' + tmpCardPos + props.id}
-                style={{ height, width: '100%', border: '1px dashed var(--color-blue-dark)', backgroundColor: 'var(--color-blue-light)', marginBottom: 24, borderRadius: 12 }}>
-                &nbsp;
-            </div>
-        )
-    }
-
-    let addCardComponent = null
-    if(isAddingCard){
-        addCardComponent = <CardNew onBlur={saveCardHandler} onSave={saveCardHandler} />
-    }else if(editable){
-        addCardComponent = <AddButton title="Add another card" onClick={() => setIsAddingCard(true)} />
-    }
-
     return (
-        <div className={styles.list} onDragEnter={onDragEnter} onDragLeave={onDragLeave} onDrop={onDropCard} ref={listRef} onDragOver={e => e.preventDefault()}>
-            <div className={styles.head}>
-                <h2 className={styles.title}>{props.title}</h2>
-                <div><i className="material-icons md-16">more_horiz</i></div>
-            </div>
-            <div className={styles.cardsContainer}>
-                {cardComponents}
-                {addCardComponent}
+        <Draggable draggableId={id} index={index} isDragDisabled={isDragDisabled}>
+            {(provided, snapshot) => (
+                <div
+                    className={styles.list}
+                    {...provided.draggableProps}
+                    ref={provided.innerRef}
+                >
+                    <div className={styles.head} {...provided.dragHandleProps} >
+                        <h2 className={styles.title}>{title}</h2>
+                        <div><i className="material-icons md-16">more_horiz</i></div>
+                    </div>
+                    <Droppable droppableId={id} type="card" isDropDisabled={newCardTitle !== null}>
+                        {(provided) => (
+                            <div
+                                className={styles.cardsContainer}
+                                ref={provided.innerRef}
+                                {...provided.droppableProps}
+                            >
+                                {cardsOrdered.map((card, index) => (
+                                    <Card
+                                        key={card.id}
 
-            </div>
-        </div>
+                                        isDragDisabled={newCardTitle !== null}
+                                        id={card.id}
+                                        index={index}
+                                        title={card.title}
+                                        coverSmall={card.coverSmall}
+                                        coverMedium={card.coverMedium}
+                                        description={card.description}
+                                        labels={card.labels}
+                                        editable={editable}
+                                    />
+                                ))}
+                                {provided.placeholder}
+                                {newCardTitle ? <CardSaving title={newCardTitle} /> : null}
+                                {snapshot.isDragging ? null : addCardComponent}
+                            </div>
+                        )}
+                    </Droppable>
+                </div>
+            )}
+        </Draggable>
     )
 }
 
-const ListWrap = props => {
-    if (props.isLoading) {
-        return <Skeleton height={320} width={240} style={{ borderRadius: 20, }} />
-    }
-    return <List {...props} />
-}
+const mapStateToProps = (state, ownProps) => ({
+    cards: getCardsFromList(state, ownProps.id)
+})
 
-export default ListWrap
+export default connect(mapStateToProps, { addCardServer })(List)

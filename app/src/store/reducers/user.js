@@ -1,6 +1,4 @@
-import { CHANGE_USER_AUTH } from '../actions/user'
-import { CHANGE_USER_DATA } from '../actions/user'
-import { LOGOUT_USER } from '../actions/user'
+import { CHANGE_USER_AUTH, CHANGE_USER_DATA, LOGOUT_USER } from '../actionTypes'
 
 const initializeState = {
     token: localStorage.getItem('token') || null,

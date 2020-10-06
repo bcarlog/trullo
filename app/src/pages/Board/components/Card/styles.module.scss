@@ -43,3 +43,19 @@
         }
     }
 }
+
+.saving {
+    background-color: red;
+    width: 100%;
+    height: 2px;
+    animation: animation-loading 1s ease;
+    animation-iteration-count: infinite;
+}
+
+@keyframes animation-loading {
+    0% { background-color: white;}
+    50% { background-color: yellow; }
+    50% { background-color: orangered; }
+    75% { background-color: greenyellow; }
+	100% { background-color: white;}
+}

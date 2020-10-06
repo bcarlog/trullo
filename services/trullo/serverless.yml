@@ -113,6 +113,15 @@ functions:
           path: /list
           cors: true
           authorizer: ${self:custom.authorizer}
+  
+  changeListOrder:
+    handler: src/components/list/changeOrderList.handler
+    events:
+      - http:
+          method: PATCH
+          path: /list/{id}/order
+          cors: true
+          authorizer: ${self:custom.authorizer}
 
   createCard:
     handler: src/components/card/createCard.handler

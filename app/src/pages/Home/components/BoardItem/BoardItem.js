@@ -27,7 +27,7 @@ const BoardItem = ({ isLoading, url, title, cover, team, owner }) => {
                 color: 'inherit'
             }}>
             <div className={styles.boardItem} >
-                <img src={cover ?? "/img/default.jpg"} alt={"Imagen " + title} className={styles.photo} />
+                <img src={cover ? cover : "/img/default.jpg"} alt={"Imagen " + title} className={styles.photo} />
                 <h2 className={styles.title}>{title}</h2>
                 <div className={styles.users}>
                     <UserItem key={uuid()} photo={owner.photo} />

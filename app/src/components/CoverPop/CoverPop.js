@@ -62,7 +62,7 @@ const CoverPop = ({ show, onClose, onSave }) => {
                             src={photo.previewURL}
                             alt={"photo-" + photo.id}
                             className={styles.photo}
-                            onClick={()=>onSaveHandler({ small: photo.previewURL, medium: photo.webformatURL })}
+                            onClick={()=>onSaveHandler({ small: photo.previewURL, medium: photo.previewURL.replace('150.jpg', '960_720.jpg') })}
                         />
                     ))}
             </div>

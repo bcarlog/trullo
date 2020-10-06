@@ -1,6 +1,4 @@
-export const CHANGE_USER_AUTH = "CHANGE_USER_AUTH"
-export const CHANGE_USER_DATA = "CHANGE_USER_DATA"
-export const LOGOUT_USER = "LOGOUT_USER"
+import { CHANGE_USER_AUTH, CHANGE_USER_DATA, LOGOUT_USER } from '../actionTypes'
 
 export const changeUserAuth = (token, expiration) => {
     return { type: CHANGE_USER_AUTH, token, expiration }

@@ -1,6 +1,6 @@
 import React from 'react';
-import Routes from './global/routes'
 import { useHistory } from "react-router-dom"
+import Routes from './global/routes'
 import axios from 'axios'
 
 import './global/variables.scss'
@@ -21,7 +21,7 @@ function App() {
         }
         return Promise.reject(error)
     })
-
+   
     return (
         <Routes />
     );

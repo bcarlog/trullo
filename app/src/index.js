@@ -5,18 +5,18 @@ import App from './App';
 import { BrowserRouter } from 'react-router-dom'
 import { Auth0Provider } from "@auth0/auth0-react";
 import * as serviceWorker from './serviceWorker';
-import { createStore, combineReducers } from 'redux'
+import { createStore, applyMiddleware, compose } from 'redux'
 import { Provider } from 'react-redux'
+import thunk from 'redux-thunk'
 
-import userReducer from './store/reducers/user';
+import reducer from './store/reducer';
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const domain = process.env.REACT_APP_AUTH0_DOMAIN
 const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID
 
-const rootReducers = combineReducers({ // Puede contener muchos reducers
-    user: userReducer
-})
-const store = createStore(rootReducers)
+const store = createStore(reducer, composeEnhancers(applyMiddleware(thunk)))
 
 ReactDOM.render(
     <Provider store={store}>
