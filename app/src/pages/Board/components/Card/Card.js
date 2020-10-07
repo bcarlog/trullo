@@ -21,7 +21,7 @@ const Card = ({ id, index, isDragDisabled, title, coverSmall, coverMedium, descr
 
     return (
         <>
-        <Draggable draggableId={id} index={index} isDragDisabled={isDragDisabled}>
+        <Draggable draggableId={id} index={index} isDragDisabled={!editable || isDragDisabled}>
             {(provided, snapshot) => (
                 <div
                     {...provided.draggableProps}
@@ -32,9 +32,9 @@ const Card = ({ id, index, isDragDisabled, title, coverSmall, coverMedium, descr
                 >
                     <div
                         ref={ref}
-                        className={styles.card}>
+                        className={[styles.card, snapshot.isDragging && !snapshot.isDropAnimating ? styles.moving: ''].join(' ')}>
                         <div>
-                            {_coverSmall ? <img src={_coverSmall} className={styles.cover} alt={_title} /> : null}
+                            {_coverSmall ? <img src={_coverSmall} className={styles.cover} alt={_title} draggable={false}/> : null}
                             <div className={styles.title}>{_title}</div>
                             <div className={styles.labels}>
                                 {_labels.map(({ label, color }) => (

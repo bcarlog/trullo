@@ -17,7 +17,7 @@ async function createUser(event, context) {
 
     const user = {
         id: uuid(),
-        username,
+        username: username ? username.replace(/@(.)+$/,'') : username,
         email,
         phoneNumber,
         photo,

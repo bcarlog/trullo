@@ -1,0 +1,7 @@
+getImages:
+  handler: src/components/image/getImages.handler
+  events:
+    - http:
+        method: GET
+        path: /image
+        cors: true

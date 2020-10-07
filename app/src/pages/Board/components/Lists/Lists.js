@@ -37,14 +37,14 @@ const Lists = ({ loading, lists, editable, addListServer }) => {
             <DragDropContext
                 onDragEnd={onDragEnd}
             >
-                <Droppable droppableId="all-columns" direction="horizontal" type="list" isDropDisabled={newListTitle !== null}>
+                <Droppable droppableId="all-columns" direction="horizontal" type="list" isDropDisabled={!editable || newListTitle !== null}>
                     {(provided) => (
                         <div className={styles.lists} {...provided.droppableProps} ref={provided.innerRef}>
                             {listOrdered.map((list, index) => (
                                 <List
                                     key={`list-${list.id}-${list.cards.length}`}
                                     id={list.id}
-                                    isDragDisabled={newListTitle !== null}
+                                    isDragDisabled={!editable || newListTitle !== null}
                                     index={index}
                                     title={list.title}
                                     boardId={list.boardId}

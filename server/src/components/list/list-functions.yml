@@ -1,0 +1,17 @@
+createList:
+  handler: src/components/list/createList.handler
+  events:
+    - http:
+        method: POST
+        path: /list
+        cors: true
+        authorizer: auth
+
+changeListOrder:
+  handler: src/components/list/changeOrderList.handler
+  events:
+    - http:
+        method: PATCH
+        path: /list/{id}/order
+        cors: true
+        authorizer: auth

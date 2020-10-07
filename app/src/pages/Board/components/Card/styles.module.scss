@@ -4,6 +4,13 @@
     align-self: flex-start;
 }
 
+.moving {
+    position: relative;
+    background-color: green;
+    transition: transform 0.1s;
+    transform: rotateZ(9deg);;
+}
+
 .card {
     background-color: var(--color-card-background);
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);

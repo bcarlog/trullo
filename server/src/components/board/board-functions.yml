@@ -1,0 +1,44 @@
+createBoard:
+  handler: src/components/board/createBoard.handler
+  events:
+    - http:
+        method: POST
+        path: /board
+        cors: true
+        authorizer: auth
+
+getOwnBoards:
+  handler: src/components/board/getOwnBoards.handler
+  events:
+    - http:
+        method: GET
+        path: /own-boards
+        cors: true
+        authorizer: auth
+
+getPublicBoards:
+  handler: src/components/board/getPublicBoards.handler
+  events:
+    - http:
+        method: GET
+        path: /public-boards
+        cors: true
+        authorizer: auth
+
+getBoard:
+  handler: src/components/board/getBoard.handler
+  events:
+    - http:
+        method: GET
+        path: /board/{id}
+        cors: true
+        authorizer: auth
+
+updateBoard:
+  handler: src/components/board/updateBoard.handler
+  events:
+    - http:
+        method: PATCH
+        path: /board/{id}
+        cors: true
+        authorizer: auth

@@ -4,6 +4,10 @@ import * as BoardServices from '../../services/BoardServices'
 import * as ListServices from '../../services/ListServices'
 import * as CardServices from '../../services/CardServices'
 
+export const putDefaultBoard = () => ({
+    type: ActionTypes.PUT_DEFAULT_BOARD
+})
+
 export const changePendingRequests = (number) => ({
     type: ActionTypes.CHANGE_PENDING_REQUESTS,
     payload: { number }
@@ -24,6 +28,7 @@ export const putBoard = (board) => ({
 export const loadBoard = (id) => {
     return dispatch => {
         dispatch(setLoadingBoard(true))
+        dispatch(putDefaultBoard())
         BoardServices.getBoardById(id)
             .then(board => dispatch(putBoard(board)))
         //.catch(err => window.open("/", "_self"))

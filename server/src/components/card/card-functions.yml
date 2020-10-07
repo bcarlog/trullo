@@ -1,0 +1,26 @@
+createCard:
+  handler: src/components/card/createCard.handler
+  events:
+    - http:
+        method: POST
+        path: /card
+        cors: true
+        authorizer: auth
+
+changeListCard:
+  handler: src/components/card/changeListCard.handler
+  events:
+    - http:
+        method: PATCH
+        path: /card/{id}/list
+        cors: true
+        authorizer: auth
+
+updateCard:
+  handler: src/components/card/updateCard.handler
+  events:
+    - http:
+        method: PATCH
+        path: /card/{id}
+        cors: true
+        authorizer: auth

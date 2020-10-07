@@ -18,6 +18,7 @@ const initializeState = {
 
 const boardReducer = (state = initializeState, action) => {
     switch (action.type) {
+        case ActionTypes.PUT_DEFAULT_BOARD: return initializeState
         case ActionTypes.PUT_BOARD: return updateBoard(state, action)
         case ActionTypes.CHANGE_BOARD: return changeBorad(state, action)
         case ActionTypes.LOADING_BOARD: return updateObject(state, { loadingBoard: action.payload.loading })

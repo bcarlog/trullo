@@ -20,6 +20,14 @@
         letter-spacing: -0.035em;
     }
 
+    .options {
+        padding: 2px 8px;
+        border-radius: 6px;
+        &:hover {
+            background-color: var(--color-grey-light-1);
+        }
+    }
+
     .cardsContainer {
         display: flex;
         flex-direction: column;

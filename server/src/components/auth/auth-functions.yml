@@ -1,0 +1,3 @@
+auth:
+  handler: src/components/auth/auth.handler
+  cors: true

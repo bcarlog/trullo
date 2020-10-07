@@ -20,7 +20,7 @@ const Board = ({ loading, amIEdit, title, loadBoard, pendingRequests }) => {
 
     useEffect(() => {
         function confirmExit() {
-            return pendingRequests > 0 ? "Saving element": null;
+            return pendingRequests > 0 ? "Changes you made may not be saved.": null;
         }
         window.onbeforeunload = confirmExit;
         return () =>  window.onbeforeunload = null
