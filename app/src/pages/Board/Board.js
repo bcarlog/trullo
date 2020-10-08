@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom'
 import styles from './styles.module.scss'
 
@@ -12,11 +12,13 @@ import Info from './components/Info/Info'
 
 const Board = ({ loading, amIEdit, title, loadBoard, pendingRequests }) => {
     const { id } = useParams()
+    
+    const { isAuthenticated } = useSelector(state => state.user)
     const [showInfo, setShowInfo] = useState(true)
 
     useEffect(() => {
-        loadBoard(id)
-    }, [id, loadBoard])
+        loadBoard(id, isAuthenticated)
+    }, [id, loadBoard, isAuthenticated])
 
     useEffect(() => {
         function confirmExit() {

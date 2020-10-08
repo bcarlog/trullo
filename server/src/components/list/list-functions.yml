@@ -7,11 +7,29 @@ createList:
         cors: true
         authorizer: auth
 
+updateList:
+  handler: src/components/list/updateList.handler
+  events:
+    - http:
+        method: PATCH
+        path: /list/{id}
+        cors: true
+        authorizer: auth
+
 changeListOrder:
   handler: src/components/list/changeOrderList.handler
   events:
     - http:
         method: PATCH
         path: /list/{id}/order
+        cors: true
+        authorizer: auth
+
+deleteList:
+  handler: src/components/list/deleteList.handler
+  events:
+    - http:
+        method: DELETE
+        path: /list/{id}
         cors: true
         authorizer: auth

@@ -15,13 +15,8 @@ const Home = props => {
         <div className={styles.container}>
             <Header />
             <div className={styles.mainBase}>
-                {isAuthenticated ?
-                    <>
-                        <OwnBords boards={ownBoards} isLoading={loading} />
-                        <PublicBoards boards={publicBoards} isLoading={loading} />
-                    </>
-                    : <h3>Login please</h3>
-                }
+                {isAuthenticated ? <OwnBords boards={ownBoards} isLoading={loading} />: null}
+                <PublicBoards boards={publicBoards} isLoading={loading} />
             </div>
         </div>
     )

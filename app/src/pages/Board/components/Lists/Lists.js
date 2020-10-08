@@ -21,7 +21,7 @@ const Lists = ({ loading, lists, editable, addListServer }) => {
     const saveListHandler = (text) => {
         if (text) {
             setNewListTitle(text)
-            addListServer(text, ()=>setNewListTitle(null))
+            addListServer(text, () => setNewListTitle(null))
         }
         setIsAddingList(false)
     }
@@ -53,20 +53,24 @@ const Lists = ({ loading, lists, editable, addListServer }) => {
                             ))}
                             {provided.placeholder}
                             {newListTitle ? <ListSaving title={newListTitle} /> : null}
-                            {loading ?
-                                <>
-                                    <ListSkeleton />
-                                    <ListSkeleton />
-                                </>
-                                : !isAddingList && editable ? <AddButton title="Add another list" onClick={() => setIsAddingList(true)} /> : null
-                            }
-                            {isAddingList && editable ?
-                                <div style={{width:240}}>
-                                    <ListNew onBlur={saveListHandler} onSave={saveListHandler} placeholder="Enter a title for this list..." />
-                                </div>
-                                :
-                                null
-                            }
+                            <div style={{ marginTop: 20 }}>
+                                {loading ?
+                                    <>
+                                        <ListSkeleton />
+                                        <ListSkeleton />
+                                    </>
+                                    : !isAddingList && editable ?
+                                        <AddButton title="Add another list" onClick={() => setIsAddingList(true)} />
+                                        : null
+                                }
+                                {isAddingList && editable ?
+                                    <div style={{ width: 240 }}>
+                                        <ListNew onBlur={saveListHandler} onSave={saveListHandler} placeholder="Enter a title for this list..." />
+                                    </div>
+                                    :
+                                    null
+                                }
+                            </div>
                         </div>
 
                     )}

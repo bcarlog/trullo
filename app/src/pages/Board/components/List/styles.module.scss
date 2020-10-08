@@ -1,5 +1,4 @@
 .list {
-    background-color: var(--color-list-background);
     width: 240px;
     align-self: start;
     margin-bottom: 20px;
@@ -13,6 +12,7 @@
     }
 
     .title {
+        font-family: inherit;
         font-weight: 500;
         font-size: 16px;
         font-weight: 500;
@@ -23,6 +23,7 @@
     .options {
         padding: 2px 8px;
         border-radius: 6px;
+        cursor: pointer;
         &:hover {
             background-color: var(--color-grey-light-1);
         }
@@ -35,6 +36,17 @@
     }
 }
 
+.wrap {
+    background-color: var(--color-list-background);
+    border-radius: 12px;
+}
+
+.moving {
+    position: relative;
+    transition: transform 0.1s;
+    transform: rotateZ(9deg);
+}
+
 .saving {
     align-self: stretch;
     background-color: red;
@@ -45,9 +57,19 @@
 }
 
 @keyframes animation-loading {
-    0% { background-color: white;}
-    50% { background-color: yellow; }
-    50% { background-color: orangered; }
-    75% { background-color: greenyellow; }
-	100% { background-color: white;}
+    0% {
+        background-color: white;
+    }
+    50% {
+        background-color: yellow;
+    }
+    50% {
+        background-color: orangered;
+    }
+    75% {
+        background-color: greenyellow;
+    }
+    100% {
+        background-color: white;
+    }
 }

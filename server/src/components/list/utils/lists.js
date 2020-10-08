@@ -14,3 +14,12 @@ export const orderLists = ({ lists, listId, order }) => {
 
     return lists
 }
+
+export const orderListsWithListEliminated = ({lists, order}) => {
+    return lists.map(list => {
+        if(list.order > order){
+            list.order = list.order - 1
+        }
+        return list
+    })
+}

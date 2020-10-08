@@ -5,9 +5,6 @@ import styles from './styles.module.scss'
 import BoardItem from '../BoardItem/BoardItem'
 
 const PublicBoards = ({ isLoading, boards }) => {
-    if (isLoading) {
-        return <></>
-    }
 
     return (
         <div className={styles.main}>
@@ -25,6 +22,13 @@ const PublicBoards = ({ isLoading, boards }) => {
                         url={`/board/${board.id}`}
                     />
                 ))}
+                {isLoading ? (
+                    <>
+                    <BoardItem key={uuid()} isLoading={isLoading}/>
+                    <BoardItem key={uuid()} isLoading={isLoading}/>
+                    <BoardItem key={uuid()} isLoading={isLoading}/>
+                    </>
+                ): null}
             </div>
         </div>
     )

@@ -1,6 +1,6 @@
 import * as ActionTypes from '../actionTypes'
 import { updateObject } from '../../utils/Reducers'
-import { orderCards, deleteCardFromList, addCardToList, orderLists } from '../../utils/Sorting'
+import { orderCards, deleteCardFromList, addCardToList, orderLists, deleteList } from '../../utils/Sorting'
 
 const initializeState = {
     id: null,
@@ -23,7 +23,9 @@ const boardReducer = (state = initializeState, action) => {
         case ActionTypes.CHANGE_BOARD: return changeBorad(state, action)
         case ActionTypes.LOADING_BOARD: return updateObject(state, { loadingBoard: action.payload.loading })
         case ActionTypes.ADD_LIST: return addList(state, action)
+        case ActionTypes.REMOVE_LIST: return removeList(state, action)
         case ActionTypes.CHANGE_CARD_ORDER: return changeCardOrder(state, action)
+        case ActionTypes.CHANGE_LIST_TITLE: return changeListTitle(state, action)
         case ActionTypes.CHANGE_CARD_LIST: return changeCardList(state, action)
         case ActionTypes.CHANGE_LIST_ORDER: return changeListOrder(state, action)
         case ActionTypes.ADD_CARD: return addCard(state, action)
@@ -47,6 +49,12 @@ const addList = (state, action) => {
     const { list } = action.payload
     list.cards = []
     return updateObject(state, { lists: [...state.lists, list] })
+}
+
+const removeList = (state, action) => {
+    const { listId } = action.payload
+    const newLists = deleteList({ lists: state.lists, listId })
+    return updateObject(state, { lists: newLists })
 }
 
 const changeCardOrder = (state, action) => {
@@ -74,6 +82,14 @@ const changeCardList = (state, action) => {
 const changeListOrder = (state, action) => {
     const { listId, order } = action.payload
     const newLists = orderLists({ lists: state.lists, listId, order })
+    return updateObject(state, { lists: newLists })
+}
+
+const changeListTitle = (state, action) => {
+    const { listId, title } = action.payload
+    const oldList = state.lists.find(list => list.id === listId)
+    oldList.title = title
+    const newLists = state.lists.map(list => list.id === listId ? oldList : list)
     return updateObject(state, { lists: newLists })
 }
 

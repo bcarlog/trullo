@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { getImages } from '../../services/ImageServices'
 
-export const useImages = ({query="random"}) => {
+export const useImages = ({query="development"}) => {
     const [loading, setLoading] = useState(false)
     const [images, setImages] = useState([])
 

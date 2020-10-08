@@ -25,11 +25,11 @@ export const putBoard = (board) => ({
     payload: board
 })
 
-export const loadBoard = (id) => {
+export const loadBoard = (id, isAuthenticated) => {
     return dispatch => {
         dispatch(setLoadingBoard(true))
         dispatch(putDefaultBoard())
-        BoardServices.getBoardById(id)
+        BoardServices.getBoardById(id, isAuthenticated)
             .then(board => dispatch(putBoard(board)))
         //.catch(err => window.open("/", "_self"))
     }
@@ -69,8 +69,22 @@ export const addListServer = (listTitle, cb) => {
         }
         dispatch(changePendingRequests(+1))
         ListServices.createList(list)
-            .then(list => {dispatch(addList(list)); cb();})
+            .then(list => { dispatch(addList(list)); cb(); })
             .finally(() => dispatch(changePendingRequests(-1)))
+    }
+}
+
+export const removeList = ({ listId }) => ({
+    type: ActionTypes.REMOVE_LIST,
+    payload: { listId }
+})
+
+export const removeListServer = ({ listId }) => {
+    return dispatch => {
+        dispatch(changePendingRequests(+1))
+        ListServices.removeList({listId})
+            .finally(() => dispatch(changePendingRequests(-1)))
+        dispatch(removeList({ listId }))
     }
 }
 
@@ -83,7 +97,7 @@ export const changeCardOrderServer = ({ cardId, listId, order }) => {
     return (dispatch) => {
         dispatch(changePendingRequests(+1))
         CardServices.updateCardList({ cardId, listId, order })
-            .finally(()=>dispatch(changePendingRequests(-1)))
+            .finally(() => dispatch(changePendingRequests(-1)))
         dispatch(changeCardOrder({ cardId, listId, order }))
     }
 }
@@ -97,7 +111,7 @@ export const changeCardListServer = ({ cardId, oldListId, newListId, order }) =>
     return (dispatch) => {
         dispatch(changePendingRequests(+1))
         CardServices.updateCardList({ cardId, listId: newListId, order })
-            .finally(()=>dispatch(changePendingRequests(-1)))
+            .finally(() => dispatch(changePendingRequests(-1)))
         dispatch(changeCardList({ cardId, oldListId, newListId, order }))
     }
 }
@@ -111,17 +125,31 @@ export const changeListOrderServer = ({ listId, order }) => {
     return (dispatch) => {
         dispatch(changePendingRequests(+1))
         ListServices.updateListOrder({ listId, order })
-            .finally(()=>dispatch(changePendingRequests(-1)))
+            .finally(() => dispatch(changePendingRequests(-1)))
         dispatch(changeListOrder({ listId, order }))
     }
 }
 
-export const addCard = ({card}) => ({
-    type: ActionTypes.ADD_CARD,
-    payload: {card}  
+export const changeListTitle = ({ listId, title }) => ({
+    type: ActionTypes.CHANGE_LIST_TITLE,
+    payload: { listId, title }
 })
 
-export const addCardServer = ({title, boardId, listId, cb}) => {
+export const changeListTitleServer = ({ listId, title }) => {
+    return (dispatch) => {
+        dispatch(changePendingRequests(+1))
+        ListServices.changeListTitle({ listId, title })
+            .finally(() => dispatch(changePendingRequests(-1)))
+        dispatch(changeListTitle({ listId, title }))
+    }
+}
+
+export const addCard = ({ card }) => ({
+    type: ActionTypes.ADD_CARD,
+    payload: { card }
+})
+
+export const addCardServer = ({ title, boardId, listId, cb }) => {
     return (dispatch) => {
         const card = {
             title: title,
@@ -130,7 +158,7 @@ export const addCardServer = ({title, boardId, listId, cb}) => {
         }
         dispatch(changePendingRequests(+1))
         CardServices.createCard(card)
-            .then(card => dispatch(addCard({card})))
-            .finally(()=>{dispatch(changePendingRequests(-1)); cb()})
+            .then(card => dispatch(addCard({ card })))
+            .finally(() => { dispatch(changePendingRequests(-1)); cb() })
     }
 }

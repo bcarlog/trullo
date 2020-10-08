@@ -56,3 +56,15 @@ export const addCardToList = ({list, card, order}) => {
     list.cards = [...list.cards, card]
     return list
 }
+
+export const deleteList = ({ lists, listId }) => {
+    const { order } = lists.find(list => list.id === listId)
+    lists = [...lists.filter(list => list.id !== listId)]
+    lists.map(list => {
+        if (list.order > order) {
+            list.order = list.order - 1
+        }
+        return list
+    })
+    return lists
+}

@@ -25,6 +25,14 @@ getPublicBoards:
         cors: true
         authorizer: auth
 
+getPublicBoardsNoAuth:
+  handler: src/components/board/getPublicBoardsNoAuth.handler
+  events:
+    - http:
+        method: GET
+        path: /public-boards-no-auth
+        cors: true
+
 getBoard:
   handler: src/components/board/getBoard.handler
   events:
@@ -33,6 +41,14 @@ getBoard:
         path: /board/{id}
         cors: true
         authorizer: auth
+
+getBoardNoAuth:
+  handler: src/components/board/getBoardNoAuth.handler
+  events:
+    - http:
+        method: GET
+        path: /board/{id}/no-auth
+        cors: true
 
 updateBoard:
   handler: src/components/board/updateBoard.handler

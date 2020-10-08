@@ -37,7 +37,7 @@ export const getBoardById = async(id) => {
     return board
 }
 
-export const getPublicBoards = async({exceptEmail=null, exceptId}) =>{ //Email a no considerar
+export const getPublicBoards = async({exceptEmail=null, exceptId=null}) =>{ //Email a no considerar
     try {
         const params = {
             TableName: process.env.BOARDS_TABLE_NAME,

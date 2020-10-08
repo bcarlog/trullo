@@ -1,8 +1,12 @@
 import axios from 'axios'
 
-export const getPublicBoards = () => {
+export const getPublicBoards = (isAuthenticated) => {
+    let url = 'public-boards-no-auth'
+    if (isAuthenticated) {
+        url = 'public-boards'
+    }
     return new Promise((resolve, reject) => {
-        axios.get('public-boards')
+        axios.get(url)
             .then(res => {
                 resolve(res.data)
             })
@@ -26,9 +30,13 @@ export const getOwnBoards = () => {
     })
 }
 
-export const getBoardById = (id) => {
+export const getBoardById = (id, isAuthenticated) => {
+    let url = `board/${id}/no-auth`
+    if (isAuthenticated) {
+        url = `board/${id}`
+    }
     return new Promise((resolve, reject) => {
-        axios.get(`board/${id}`)
+        axios.get(url)
             .then(res => {
                 resolve(res.data)
             })
