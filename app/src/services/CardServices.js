@@ -38,3 +38,16 @@ export const updateCard = ({cardId, title="", description="", coverSmall=null, c
             })
     })
 }
+
+export const removeCard = ({ cardId }) => {
+    return new Promise((resolve, reject) => {
+        axios.delete(`card/${cardId}`)
+            .then(res => {
+                resolve(res.data)
+            })
+            .catch(err => {
+                console.error(err)
+                reject(err)
+            })
+    })
+}

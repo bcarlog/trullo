@@ -1,17 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useAuth0 } from '@auth0/auth0-react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch, connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import styles from './styles.module.scss'
 
 import { logoutUser } from '../../store/actions/user'
+import { changeTheme } from '../../store/actions/config'
 import Button from '../../components/Button/Button'
 import ProfileOption from './components/ProfileOption'
 import { useOutsideDetect } from '../../utils/Listeners'
 
-const Header = ({ title }) => {
+const Header = ({ title, changeTheme }) => {
     const { loginWithRedirect, logout } = useAuth0();
     const { name, token, photo, expiration, isAuthenticated } = useSelector(state => state.user)
+    const { theme } = useSelector(state => state.config)
     const dispatch = useDispatch()
 
     const [showProfileOptions, setShowProfileOptions] = useState(false)
@@ -76,6 +78,7 @@ const Header = ({ title }) => {
                     </div>
                     {showProfileOptions ?
                         <div className={styles.profileOptions}>
+                            <ProfileOption icon={theme === 'light' ? "brightness_2" : "flare"} text={theme === 'light' ? "Night Mode" : "Light Mode"} onClick={changeTheme} />
                             <ProfileOption color="red" icon="exit_to_app" text="Logout" onClick={logoutHandler} />
                         </div>
                         : null}
@@ -87,4 +90,4 @@ const Header = ({ title }) => {
     )
 }
 
-export default Header
+export default connect(null, {changeTheme})(Header)

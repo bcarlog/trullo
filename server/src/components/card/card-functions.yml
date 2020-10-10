@@ -24,3 +24,12 @@ updateCard:
         path: /card/{id}
         cors: true
         authorizer: auth
+
+deleteCard:
+  handler: src/components/card/deleteCard.handler
+  events:
+    - http:
+        method: DELETE
+        path: /card/{id}
+        cors: true
+        authorizer: auth

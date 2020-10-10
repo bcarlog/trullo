@@ -8,6 +8,8 @@ import AddUserItem from '../../../../components/AddUserItem/AddUserItem'
 import { getVisibility, getTeamFull, getOwner, getBoardId, getAmIOwner, getEditable, getLoadingBoard } from '../../../../store/selectors'
 import { updateBoard } from '../../../../store/actions/board'
 import { useUsers } from '../../hooks'
+// import ButtonSecondary from '../../../../components/ButtonSecondary/ButtonSecondary'
+// import BoardModal from '../BoardModal/BoardModal'
 
 const Menu = ({ visibility, teamFull, owner, boardId, amIOwner, editable, loading, updateBoard }) => {
     const { users, loadingUsers, loadUsers } = useUsers({boardId})
@@ -34,7 +36,8 @@ const Menu = ({ visibility, teamFull, owner, boardId, amIOwner, editable, loadin
                     </>}
             </div>
             <div className={styles.right}>
-
+                {/* <ButtonSecondary icon="more_horiz" text="Show Menu"/>
+                <BoardModal editable={amIOwner}/> */}
             </div>
         </div>
     )

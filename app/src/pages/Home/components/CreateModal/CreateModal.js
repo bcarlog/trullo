@@ -50,7 +50,7 @@ const CreateModal = props => {
                     />
                 </div>
                 <div className={styles.buttonStatus}>
-                    <Visibility value={visibility} onChange={setVisibility} />
+                    <Visibility value={visibility} onChange={setVisibility} editable={true}/>
                 </div>
                 <div className={styles.buttons}>
                     <div className={styles.cancel} onClick={props.onClose}>Cancel</div>

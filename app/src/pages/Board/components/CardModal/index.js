@@ -9,7 +9,7 @@ import Textarea from '../../../../components/Textarea/Textarea'
 import LabelsPop from './components/LabelsPop'
 import CoverPop from '../../../../components/CoverPop/CoverPop'
 
-const CardModal = ({ cardId, titleP, coverSmallP, coverMediumP, descriptionP, labelsP, show, onClose, onChangeTitleP, onChangeCoverSmallP, onChangeLabelsP, editable }) => {
+const CardModal = ({ cardId, titleP, coverSmallP, coverMediumP, descriptionP, labelsP, show, onClose, onChangeTitleP, onChangeCoverSmallP, onChangeLabelsP, editable, onRemove }) => {
     const [popToShow, setPopToShow] = useState(null)
     const [editTextArea, setEditTextArea] = useState(false)
     const [cover, setCover] = useState({ small: coverSmallP, medium: coverMediumP })
@@ -69,13 +69,13 @@ const CardModal = ({ cardId, titleP, coverSmallP, coverMediumP, descriptionP, la
                                     <div className={styles.button}><i className="material-icons md-16">create</i>  Edit</div>
                                 </div> : null
                             }
-                            <Textarea value={description} onChange={setDescription} onSave={onSaveCard} isEditable={editTextArea} editable={editable}/>
+                            <Textarea value={description} onChange={setDescription} onSave={onSaveCard} isEditable={editTextArea} editable={editable} />
                         </div>
                     </div>
                     <div className={styles.actions}>
                         <h4><i className="material-icons md-16">account_circle</i> Actions</h4>
                         <div style={{ position: 'relative' }}>
-                            <ButtonSecondary text="Labers" icon="label" onClick={() => setPopToShow('labels')} disabled={!editable}/>
+                            <ButtonSecondary text="Labers" icon="label" onClick={() => setPopToShow('labels')} disabled={!editable} />
                             <LabelsPop
                                 show={popToShow === 'labels'}
                                 onClose={() => setPopToShow(null)}
@@ -84,13 +84,17 @@ const CardModal = ({ cardId, titleP, coverSmallP, coverMediumP, descriptionP, la
                             />
                         </div>
                         <div style={{ position: 'relative' }}>
-                            <ButtonSecondary text="Cover" icon="photo" onClick={() => setPopToShow('cover')} disabled={!editable}/>
+                            <ButtonSecondary text="Cover" icon="photo" onClick={() => setPopToShow('cover')} disabled={!editable} />
                             <CoverPop
                                 show={popToShow === 'cover'}
                                 onClose={() => setPopToShow(null)}
                                 onSave={onSaveCover}
                             />
                         </div>
+                        {editable ?
+                            <ButtonSecondary text="Archive" icon="delete" type="warning" onClick={onRemove} disabled={!editable} />
+                            : null
+                        }
                     </div>
                 </div>
             </div>

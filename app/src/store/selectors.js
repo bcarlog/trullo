@@ -27,3 +27,5 @@ export const getList = (store, listId) => getBoardState(store).lists.find(list =
 export const getCardsFromList = (store, listId) => getList(store, listId).cards
 
 export const getPendingRequests = (store) => getBoardState(store).pendingRequests
+
+export const getConfigState = (store) => store.config

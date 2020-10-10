@@ -162,3 +162,17 @@ export const addCardServer = ({ title, boardId, listId, cb }) => {
             .finally(() => { dispatch(changePendingRequests(-1)); cb() })
     }
 }
+
+export const removeCard = ({ cardId, listId }) => ({
+    type: ActionTypes.REMOVE_CARD,
+    payload: { cardId, listId }
+})
+
+export const removeCardServer = ({ cardId, listId }) => {
+    return (dispatch) => {
+        dispatch(changePendingRequests(+1))
+        CardServices.removeCard({cardId})
+            .finally(() => dispatch(changePendingRequests(-1)))
+        dispatch(removeCard({cardId, listId}))
+    }
+}

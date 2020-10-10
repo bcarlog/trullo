@@ -6,7 +6,11 @@
     box-shadow: 0 1px 5px rgba(0,0,0,.05);
     //border-radius: 20px 20px 0 0;
     user-select: none;
-    z-index: 1;
+    z-index: 2;
+
+    @media (max-width: 512px) {
+        padding: 12px 20px 8px 20px;
+    }
 
     .logoBox {
         display: flex;
@@ -20,6 +24,10 @@
             font-weight: 600;
             font-size: 18px;
             padding: 0 20px;
+
+            @media (max-width: 550px) {
+                display: none;
+            }
         }
     }
 
@@ -33,12 +41,17 @@
             font-size: 17px;
             font-weight: 600;
             padding: 0 16px;
+            min-width: 100px;
+            min-width: 140px;
+            white-space: nowrap;
+            overflow-x: hidden;
+            text-overflow: ellipsis;
             border-right: 3px solid var(--color-grey-light-1);
         }
 
         .boardsButton{
             margin: 0 16px;
-            width: 110px;
+            max-width: 110px;
             background-color: var(--color-grey-light-1);
             border-radius: 5px;
             color: var(--color-grey-dark-1);
@@ -47,6 +60,12 @@
             align-items: center;
             font-size: 14px;
             cursor: pointer;
+
+            span {
+                @media (max-width: 460px) {
+                    display: none;
+                }
+            }
         }
     }
 
@@ -121,6 +140,13 @@
             font-size: 16px;
             font-weight: 400;
             padding: 0 20px;
+            white-space: nowrap;
+            overflow-x: hidden;
+            text-overflow: ellipsis;
+
+            @media (max-width: 660px) {
+                display: none;
+            }
         }
 
         .button {

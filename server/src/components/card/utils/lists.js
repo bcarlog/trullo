@@ -25,3 +25,12 @@ export const orderListWithNewCard = ({ list, id, order }) => {
         return item
     })
 }
+
+export const orderCardsWithCardEliminated = ({cards, order}) => {
+    return cards.map(card => {
+        if(card.order > order){
+            card.order = card.order - 1
+        }
+        return card
+    })
+}

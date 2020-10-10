@@ -5,7 +5,7 @@ import styles from './styles.module.scss'
 
 import CardModal from '../CardModal'
 
-const Card = ({ id, index, isDragDisabled, title, coverSmall, coverMedium, description, labels = [], editable }) => {
+const Card = ({ id, index, isDragDisabled, title, coverSmall, coverMedium, description, labels = [], editable, onRemove }) => {
     const [showModal, setShowModal] = useState(false)
     const [_title, _setTitle] = useState(title)
     const [_coverSmall, _setCoverSmall] = useState(coverSmall)
@@ -63,6 +63,7 @@ const Card = ({ id, index, isDragDisabled, title, coverSmall, coverMedium, descr
                 descriptionP={description}
                 labelsP={labels}
                 editable={editable}
+                onRemove={onRemove}
 
                 onChangeTitleP={_setTitle}
                 onChangeCoverSmallP={_setCoverSmall}

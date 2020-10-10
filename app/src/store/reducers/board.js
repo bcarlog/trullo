@@ -29,6 +29,7 @@ const boardReducer = (state = initializeState, action) => {
         case ActionTypes.CHANGE_CARD_LIST: return changeCardList(state, action)
         case ActionTypes.CHANGE_LIST_ORDER: return changeListOrder(state, action)
         case ActionTypes.ADD_CARD: return addCard(state, action)
+        case ActionTypes.REMOVE_CARD: return removeCard(state, action)
         case ActionTypes.CHANGE_PENDING_REQUESTS: return updateObject(state, { pendingRequests: state.pendingRequests + action.payload.number })
         default: return state
     }
@@ -99,6 +100,15 @@ const addCard = (state, action) => {
     oldList.cards = [...oldList.cards, card]
 
     const newLists = state.lists.map(list => list.id === card.listId ? oldList : list)
+    return updateObject(state, { lists: newLists })
+}
+
+const removeCard = (state, action) => {
+    const { cardId, listId } = action.payload
+    const list = state.lists.find(list => list.id === listId)
+    const newList = deleteCardFromList({list, cardId})
+
+    const newLists = state.lists.map(list => list.id === listId ? newList : list)
     return updateObject(state, { lists: newLists })
 }
 

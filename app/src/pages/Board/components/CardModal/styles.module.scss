@@ -33,9 +33,12 @@
                 padding: 10px 0;
                 font-family: inherit;
                 transition: all .2s;
+                background-color: inherit;
+                color: inherit;
 
                 &:focus {
                     padding: 10px 8px;
+                    background-color: var(--color-input-background);
                 }
             }
 

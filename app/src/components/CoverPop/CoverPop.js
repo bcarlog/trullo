@@ -24,6 +24,7 @@ const CoverPop = ({ show, onClose, onSave }) => {
             onClose()
         }
     }
+    
     useOutsideDetect(ref, resetData)
 
     if (!show) {

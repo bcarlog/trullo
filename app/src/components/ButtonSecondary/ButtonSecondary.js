@@ -1,21 +1,37 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import styles from './styles.module.scss'
 
-const ButtonSecondary = props => {
-    
-    const onClick = () => {
-        if (props.disabled) {
+const ButtonSecondary = ({disabled, text, icon, type, onClick}) => {
+    const classes = [styles.button]
+    if(type === 'warning'){
+        classes.push(styles.warning)
+    }
+    const onClickHandler = () => {
+        if (disabled) {
             return
         }
-        props.onClick()
+        onClick()
     }
 
     return (
-        <div onClick={onClick} className={styles.button + " " + styles.small}>
-            <i className="material-icons md-16">{props.icon}</i>
-            <span>{props.text}</span>
+        <div onClick={onClickHandler} className={classes.join(' ')}>
+            <i className="material-icons md-16">{icon}</i>
+            <span>{text}</span>
         </div>
     )
+}
+
+ButtonSecondary.propTypes = {
+    disabled: PropTypes.bool,
+    text: PropTypes.string,
+    type: PropTypes.string,
+    icon: PropTypes.string,
+    onClick: PropTypes.func
+}
+
+ButtonSecondary.defaultProps = {
+    onClick: ()=>{}
 }
 
 export default ButtonSecondary

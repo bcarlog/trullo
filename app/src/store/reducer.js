@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 import userReducer from './reducers/user'
-import messageReducer from './reducers/message'
+import configReducer from './reducers/config'
 import boardReducer from './reducers/board'
 
-export default combineReducers({user: userReducer, message: messageReducer, board: boardReducer})
+export default combineReducers({user: userReducer, config: configReducer, board: boardReducer})

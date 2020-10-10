@@ -4,7 +4,7 @@ import { Droppable, Draggable } from 'react-beautiful-dnd'
 import styles from './styles.module.scss'
 
 import { getCardsFromList } from '../../../../store/selectors'
-import { addCardServer, changeListTitleServer, removeListServer } from '../../../../store/actions/board'
+import { addCardServer, changeListTitleServer, removeListServer, removeCardServer } from '../../../../store/actions/board'
 import AddButton from '../../../../components/AddButton/AddButton'
 import Card from '../Card/Card'
 import CardNew from '../CardNew/CardNew'
@@ -12,7 +12,7 @@ import CardSaving from '../Card/CardSaving'
 import Options from '../../../../components/Options/Options'
 import InputList from '../../../../components/InputList.js/InputList'
 
-const List = ({ id, index, title, boardId, editable, cards, isDragDisabled, addCardServer, changeListTitleServer, removeListServer }) => {
+const List = ({ id, index, title, boardId, editable, cards, isDragDisabled, addCardServer, changeListTitleServer, removeListServer, removeCardServer }) => {
     const [isAddingCard, setIsAddingCard] = useState(false)
     const [newCardTitle, setNewCardTitle] = useState(null)
     const [showOptions, setShowOptions] = useState(false)
@@ -90,6 +90,7 @@ const List = ({ id, index, title, boardId, editable, cards, isDragDisabled, addC
                                             description={card.description}
                                             labels={card.labels}
                                             editable={editable}
+                                            onRemove={()=>removeCardServer({cardId: card.id, listId: id})}
                                         />
                                     ))}
                                     {provided.placeholder}
@@ -112,5 +113,6 @@ const mapStateToProps = (state, ownProps) => ({
 export default connect(mapStateToProps, {
     addCardServer,
     changeListTitleServer,
-    removeListServer
+    removeListServer,
+    removeCardServer
 })(List)

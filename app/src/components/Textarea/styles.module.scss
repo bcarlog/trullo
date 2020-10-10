@@ -15,9 +15,11 @@
         font-weight: 500;
         border: none;
         resize: none;
+        background-color: inherit;
+        color: inherit;
     
-        &:disabled {
-            
+        &:focus {
+            background-color: var(--color-input-background);
         }
     }
 
