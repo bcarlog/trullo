@@ -41,10 +41,10 @@ const ThemeLight = () => {
     bodyStyles.setProperty('--color-warning-1','#f54545')
     bodyStyles.setProperty('--color-warning-2','#f02121')
 
-    bodyStyles.setProperty('--color-lists-border',' transparent')
+    bodyStyles.setProperty('--color-lists-border','transparent')
     bodyStyles.setProperty('--color-modal-background','#fff')
-    bodyStyles.setProperty('--color-modal-border',' transparent')
-    bodyStyles.setProperty('--color-input-background',' inherit')
+    bodyStyles.setProperty('--color-modal-border','transparent')
+    bodyStyles.setProperty('--color-input-background','#fff')
     bodyStyles.setProperty('color', '#111')
 
     return (<React.Fragment></React.Fragment>)

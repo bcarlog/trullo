@@ -6,6 +6,7 @@ import OwnBords from './components/OwnBords'
 import PublicBoards from './components/PublicBoards'
 import { useSelector } from 'react-redux'
 import { useBoards } from './hooks'
+import MessageLogin from './components/MessageLogin/MessageLogin'
 
 const Home = props => {
     const { isAuthenticated } = useSelector(state => state.user)
@@ -15,7 +16,7 @@ const Home = props => {
         <div className={styles.container}>
             <Header />
             <div className={styles.mainBase}>
-                {isAuthenticated ? <OwnBords boards={ownBoards} isLoading={loading} />: null}
+                {isAuthenticated ? <OwnBords boards={ownBoards} isLoading={loading} />: <MessageLogin/>}
                 <PublicBoards boards={publicBoards} isLoading={loading} />
             </div>
         </div>

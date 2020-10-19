@@ -1,0 +1,28 @@
+.noLoginMessage {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 40px 0;
+
+    .button {
+        background-color: var(--color-primary);
+        font-size: 22px;
+        padding: 6px 64px;
+        border-radius: 9px;
+        color: white;
+        margin-top: 24px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: var(--color-primary-light);
+        }
+    }
+
+    .message {
+        text-transform: uppercase;
+        color: var(--color-primary);
+        font-weight: 500;
+        font-size: 28px;
+    }
+}
